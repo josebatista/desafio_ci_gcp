@@ -1,0 +1,30 @@
+substitutions:
+  _CONTAINER_GO_VERSION: 1.0
+  _CONTAINER_GO_NAME: "my_go_lang"
+steps:
+  - id: "Gerando imagem docker"
+    name: "gcr.io/cloud-builders/docker"
+    args:
+      - "build"
+      - "-t"
+      - "gcr.io/$PROJECT_ID/${_CONTAINER_GO_NAME}:latest"
+      - "-t"
+      - "gcr.io/$PROJECT_ID/${_CONTAINER_GO_NAME}:${_CONTAINER_GO_VERSION}"
+      - "."
+  - id: "Executando teste"
+    name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "run",
+        "-t",
+        "--named",
+        "desafio_ci",
+        "gcr.io/$PROJECT_ID/${_CONTAINER_GO_NAME}:latest",
+        "go",
+        "test",
+      ]
+
+images:
+  - "gcr.io/$PROJECT_ID/${_CONTAINER_GO_NAME}:latest"
+  - "gcr.io/$PROJECT_ID/${_CONTAINER_GO_NAME}:${_CONTAINER_GO_VERSION}"
+tags: ["cloud-builders-community"]
