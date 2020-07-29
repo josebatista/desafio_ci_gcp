@@ -1,5 +1,5 @@
 substitutions:
-  _CONTAINER_GO_VERSION: 1.0
+  _CONTAINER_GO_VERSION: "v1"
   _CONTAINER_GO_NAME: "my_go_lang"
 steps:
   - id: "Gerando imagem docker"
